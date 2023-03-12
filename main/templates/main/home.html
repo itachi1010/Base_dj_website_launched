@@ -1,0 +1,74 @@
+{% extends 'main/header.html' %}
+
+  {% block content %}
+
+  {% load static %}
+
+  {{ form.media }}
+
+
+  <!--CTA-->
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-6 pb-4">
+        <h1 class="display-4 font-weight-bold">Elevate your listening</h1>
+        <h5>Everyday headphones that make your favorite artists sound like their performing a never-ending encore.</h5>
+        <a class="btn btn-primary mt-2" href="/products">FIND YOUR SET</a>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-6">
+        <img class="img-fluid rounded" src="{% static 'img/cta-headphones.jpg' %}" alt="Headphones">
+      </div>
+    </div>
+  </div>
+
+  <div id="blog">
+    <script>
+      $(document).ready(function() {
+        $('#blog').summernote({
+          height: 200, // set the height of the editor
+          toolbar: false, // disable the toolbar to make it look like a simple blog
+          readOnly: true, // make the editor read-only to prevent editing the blog on the homepage
+          placeholder: 'Loading blog...', // set a placeholder while the blog content is loading
+        });
+    
+        // make an AJAX request to get the blog content and display it in the Summernote editor
+        $.ajax({
+          url: 'https://www.feedspot.com/infiniterss.php?_src=feed_title&followfeedid=4648551&q=site:https%3A%2F%2Fcointelegraph.com%2Frss',
+          success: function(data) {
+            $('#blog').summernote('code', data);
+          },
+          error: function() {
+            $('#blog').summernote('code', 'Failed to load blog.');
+          }
+        });
+      });
+    </script>
+    
+  </div>
+
+
+  <!--Products-->
+  <div class="container py-3">
+    <h2>Products</h2>
+    <hr>
+    <br>
+    <div class="row">
+      {% for p in product %}
+        <div class="col-sm-12 col-md-6 col-lg-3 pb-4">
+          <div class="card h-100" style="border:none">
+            <img src="{{ p.product_image.url }}" class="card-img-top" alt="{{ p.product_name}}" style="width: auto; height: 250px; object-fit: scale-down;">
+            <div class="card-body">
+              <h5 class="card-title">{{ p.product_name }}</h5>
+              <p class="card-text text-muted" style="font-size:12px">{{ p.product_type }}</p>
+              <p class="card-text">{{ p.product_description }}</p>
+              <a href="{{ p.affiliate_url }}" class="btn btn-warning">Buy now</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="container text-right">
+      <a href="/products">View more</a>
+    </div>
+  </div>
+{% endblock %}
