@@ -16,3 +16,4 @@ soupsieve
 sqlparse
 tzdata
 webencodings
+whitenoise
