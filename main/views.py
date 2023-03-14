@@ -6,7 +6,7 @@ from django.contrib.auth import login  #add this
 from django.contrib import messages #import messages
 from django.contrib.auth import login,logout, authenticate #import authenticate
 from django.contrib.auth.forms import AuthenticationForm #import AuthenticationForm
-from .models import BlogPost
+
 
 
 
@@ -67,9 +67,4 @@ def blog(request):
 	page_number = request.GET.get('page')
 	blog_obj = paginator.get_page(page_number)
 	return render(request=request, template_name="main/blog.html", context={"blog":blog_obj})    
-    
-def article(request, article_page):
-    article = Article.objects.get(article_slug=article_page)
-    return render(request=request, template_name='main/article.html', context={"article": article})    
-    
     
